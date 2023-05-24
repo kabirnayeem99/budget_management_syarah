@@ -1,4 +1,4 @@
-package com.syarah.budgetmanagement.presentation.transaction_upsert
+package com.syarah.budgetmanagement.presentation.transactionUpsert
 
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
