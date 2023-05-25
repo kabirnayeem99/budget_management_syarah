@@ -7,6 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import timber.log.Timber
 
 abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
     }
 
     open fun onCreated() {
-
+        Timber.d("on created")
     }
 
 }
