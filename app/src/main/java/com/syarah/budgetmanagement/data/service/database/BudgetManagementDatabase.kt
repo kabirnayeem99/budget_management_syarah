@@ -2,7 +2,6 @@ package com.syarah.budgetmanagement.data.service.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.syarah.budgetmanagement.data.dto.AccountLocalDto
 import com.syarah.budgetmanagement.data.dto.MonthLocalDto

@@ -10,4 +10,5 @@ data class Month(
     val dinarExpense: Int,
     val dollarIncome: Int,
     val dinarIncome: Int,
+    val accountId: Int,
 )

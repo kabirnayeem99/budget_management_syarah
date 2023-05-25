@@ -11,7 +11,7 @@ import timber.log.Timber
 
 abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
 
-    protected lateinit var binding: B
+    private lateinit var binding: B
 
     @get:LayoutRes
     protected abstract val layout: Int

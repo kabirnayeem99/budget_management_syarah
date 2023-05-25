@@ -1,3 +1,3 @@
 package com.syarah.budgetmanagement.data.dto
 
-class TransactionRemoteDto {}
+class TransactionRemoteDto

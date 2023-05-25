@@ -13,11 +13,9 @@ data class TransactionDetails(
 
 
 enum class TransactionCurrency {
-    Dinar,
-    Dollar,
+    Dinar, Dollar,
 }
 
 enum class TransactionType {
-    Income,
-    Expense,
+    Income, Expense,
 }
