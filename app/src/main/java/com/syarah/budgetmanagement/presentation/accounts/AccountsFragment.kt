@@ -41,9 +41,9 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
                 adapter = accountAdapter
             }
         }
-        accountAdapter.setOnClick {  }
-        accountAdapter.setOnDelete {  }
-        accountAdapter.setOnEdit {  }
+        accountAdapter.setOnClick { }
+        accountAdapter.setOnDelete { }
+        accountAdapter.setOnEdit { }
     }
 
     private fun setupMenu() {
