@@ -16,7 +16,7 @@
             android:id="@+id/rv_months"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/list_item_account" />
+            tools:listitem="@layout/list_item_month" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
