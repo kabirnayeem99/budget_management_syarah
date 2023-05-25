@@ -8,7 +8,7 @@ import com.syarah.budgetmanagement.domain.entity.TransactionType
 import java.util.Date
 
 @Entity(
-    tableName = "transaction_details",
+    tableName = "transactions",
     foreignKeys = [
         ForeignKey(
             entity = MonthLocalDto::class,
