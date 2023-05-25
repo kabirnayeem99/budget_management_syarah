@@ -1,18 +1,13 @@
-package com.syarah.budgetmanagement
+package com.syarah.budgetmanagement.presentation
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseActivity
 import com.syarah.budgetmanagement.databinding.ActivityHostBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HostActivity : BaseActivity<ActivityHostBinding>() {
 
     override val layout: Int
