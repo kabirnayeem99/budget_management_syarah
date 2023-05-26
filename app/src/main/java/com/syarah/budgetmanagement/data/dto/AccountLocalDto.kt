@@ -7,6 +7,4 @@ import androidx.room.PrimaryKey
 data class AccountLocalDto(
     @PrimaryKey val id: Int,
     val name: String,
-    val dollarAmount: Int,
-    val dinarAmount: Int,
 )

@@ -13,10 +13,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
-    @Provides
-    fun provideAccountLocalDataSource(): AccountLocalDataSource {
-        return AccountLocalDataSource()
-    }
+
 
     @Provides
     fun provideAccountRemoteDataSource(): AccountRemoteDataSource {
@@ -34,10 +31,7 @@ object DataSourceModule {
         return MonthRemoteDataSource()
     }
 
-    @Provides
-    fun provideTransactionLocalDataSource(): AccountLocalDataSource {
-        return AccountLocalDataSource()
-    }
+
 
 
     @Provides

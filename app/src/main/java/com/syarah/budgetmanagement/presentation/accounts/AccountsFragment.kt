@@ -7,12 +7,17 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentAccountsBinding
+import com.syarah.budgetmanagement.domain.entity.Account
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
@@ -21,6 +26,7 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
         get() = R.layout.fragment_accounts
 
     private val accountAdapter by lazy { AccountAdapter() }
+    private val viewModel by activityViewModels<AccountsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +36,13 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
 
 
     private fun setData() {
-        accountAdapter.submitList(emptyList())
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    accountAdapter.submitList(uiState.accounts)
+                }
+            }
+        }
     }
 
 
@@ -44,25 +56,30 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
             }
         }
         accountAdapter.setOnClick { }
-        accountAdapter.setOnDelete { }
-        accountAdapter.setOnEdit { }
+        accountAdapter.setOnDelete { account -> viewModel.deleteAccount(account) }
+        accountAdapter.setOnEdit { account -> showAdEditAccountDialog(account) }
     }
 
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) {
-                // Handle for example visibility of menu items
-            }
+            override fun onPrepareMenu(menu: Menu) = Unit
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_accounts, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                // Validate and handle the selected menu item
+                when (menuItem.itemId) {
+                    R.id.menu_add -> showAdEditAccountDialog(null)
+                }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun showAdEditAccountDialog(account: Account?) {
+        viewModel.setEditableAccount(account)
+        AddAccountDialogFragment().show(childFragmentManager, "AddAccountDialogFragment")
     }
 
 }
