@@ -82,7 +82,10 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
     private fun navigateToTransactionUpsertScreen(transaction: Transaction?) {
         navController.navigate(
             TransactionDetailsFragmentDirections.actionTransactionDetailsFragmentToTransactionUpsertFragment(
-                transactionId = transaction?.id ?: -1
+                transactionId = transaction?.id ?: -1,
+                monthId = transaction?.monthId ?: args.monthId,
+                year = transaction?.year ?: args.year,
+                accountId = transaction?.accountId ?: args.accountId,
             )
         )
     }

@@ -10,5 +10,6 @@ data class Transaction(
     val accountId: Int,
     val total: Int,
     val currency: TransactionCurrency,
-    val type: TransactionType
+    val type: TransactionType,
+    val year: Int,
 )

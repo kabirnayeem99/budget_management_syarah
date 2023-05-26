@@ -43,7 +43,7 @@ class TransactionUpsertViewModel @Inject constructor(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val isUpdate = uiState.value.transactionDetails != null
-            if (isUpdate) createNewTransaction(transactionName, amount, type, currency)
+            if (!isUpdate) createNewTransaction(transactionName, amount, type, currency)
             else updateTransaction(transactionName, amount, type, currency)
             withContext(Dispatchers.Main){
                 onSaved()

@@ -15,8 +15,8 @@ fun List<TransactionLocalDto>.toTransactions(): List<Transaction> {
             total = dto.total,
             currency = dto.currency,
             type = dto.type,
-
-            )
+            year = 0
+        )
     }
 }
 

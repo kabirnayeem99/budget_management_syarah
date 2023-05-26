@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.domain.usecase.transaction
 
 import com.syarah.budgetmanagement.domain.entity.Transaction
 import com.syarah.budgetmanagement.domain.repository.TransactionRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class DeleteTransactionUseCase @Inject constructor(
@@ -12,6 +13,7 @@ class DeleteTransactionUseCase @Inject constructor(
             transactionRepository.deleteTransaction(transaction)
             Result.success(Unit)
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }

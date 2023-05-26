@@ -4,6 +4,7 @@ import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
 import com.syarah.budgetmanagement.domain.entity.TransactionDetails
 import com.syarah.budgetmanagement.domain.entity.TransactionType
 import com.syarah.budgetmanagement.domain.repository.TransactionRepository
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
@@ -30,9 +31,11 @@ class CreateNewTransactionUseCase @Inject constructor(
                 type = type,
                 amount = amount,
             )
+            Timber.d(transaction.toString())
             transactionRepository.addTransaction(transaction)
             Result.success(Unit)
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }

@@ -54,7 +54,7 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
 
     private fun navigateToTransactionDetailsScreen(month: Month) {
         val direction = MonthsFragmentDirections.actionMonthsFragmentToTransactionDetailsFragment(
-            monthId = month.monthId, year = month.year, accountId = args.accountId
+            monthId = month.id, accountId = args.accountId
         )
         navController.navigate(direction)
     }

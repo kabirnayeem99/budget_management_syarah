@@ -10,6 +10,8 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
@@ -29,6 +31,7 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
+        setUpDate()
     }
 
     private fun setUpViews() {
@@ -36,6 +39,17 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
         setupMenu()
         binding.apply {
 
+        }
+    }
+
+    private val args by navArgs<TransactionUpsertFragmentArgs>()
+
+    private fun setUpDate() {
+        lifecycleScope.launch {
+            viewModel.fetchTransactionDetails(args.transactionId)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+            }
         }
     }
 

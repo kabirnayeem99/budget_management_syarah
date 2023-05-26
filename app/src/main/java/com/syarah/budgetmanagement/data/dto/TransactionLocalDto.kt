@@ -32,5 +32,5 @@ data class TransactionLocalDto(
     val name: String,
     val total: Int,
     val currency: TransactionCurrency,
-    val type: TransactionType
+    val type: TransactionType,
 )

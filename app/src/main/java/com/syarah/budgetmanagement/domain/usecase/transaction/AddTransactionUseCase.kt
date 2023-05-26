@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.domain.usecase.transaction
 
 import com.syarah.budgetmanagement.domain.entity.TransactionDetails
 import com.syarah.budgetmanagement.domain.repository.TransactionRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class AddTransactionUseCase @Inject constructor(
@@ -12,6 +13,7 @@ class AddTransactionUseCase @Inject constructor(
             transactionRepository.addTransaction(transaction)
             Result.success(Unit)
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }
