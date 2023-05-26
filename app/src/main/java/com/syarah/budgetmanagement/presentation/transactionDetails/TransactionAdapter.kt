@@ -46,8 +46,8 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVi
                 }
                 tvMoney.text = money
                 val moneyColor = when (transaction.type) {
-                    TransactionType.Expense -> context.getColor(R.color.md_theme_dark_error)
-                    TransactionType.Income -> context.getColor(androidx.appcompat.R.color.primary_material_dark)
+                    TransactionType.Expense -> context.getColor(R.color.md_theme_light_error)
+                    TransactionType.Income -> context.getColor(R.color.md_theme_light_primary)
                 }
                 tvMoney.setTextColor(moneyColor)
                 root.setOnClickListener { _onClick?.let { func -> func(transaction) } }

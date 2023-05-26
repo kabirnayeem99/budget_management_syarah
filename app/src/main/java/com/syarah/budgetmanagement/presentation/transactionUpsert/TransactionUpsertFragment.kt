@@ -12,7 +12,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentTransactionUpsertBinding
@@ -31,7 +30,7 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
-        setUpDate()
+        setUpData()
     }
 
     private fun setUpViews() {
@@ -44,7 +43,7 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
 
     private val args by navArgs<TransactionUpsertFragmentArgs>()
 
-    private fun setUpDate() {
+    private fun setUpData() {
         lifecycleScope.launch {
             viewModel.fetchTransactionDetails(args.transactionId)
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -83,6 +82,8 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
                 amount = amount,
                 type = type,
                 currency = currency,
+                monthId = args.monthId,
+                accountId = args.accountId,
                 onSaved = { navController.navigateUp() })
         }
     }

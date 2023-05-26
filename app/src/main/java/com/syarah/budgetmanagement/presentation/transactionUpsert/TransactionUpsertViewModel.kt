@@ -39,13 +39,15 @@ class TransactionUpsertViewModel @Inject constructor(
         amount: Int,
         type: TransactionType,
         currency: TransactionCurrency,
+        monthId: Int,
+        accountId: Int,
         onSaved: () -> Unit,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val isUpdate = uiState.value.transactionDetails != null
-            if (!isUpdate) createNewTransaction(transactionName, amount, type, currency)
-            else updateTransaction(transactionName, amount, type, currency)
-            withContext(Dispatchers.Main){
+            if (!isUpdate) createNewTransaction(transactionName, amount, type, currency,monthId, accountId)
+            else updateTransaction(transactionName, amount, type, currency,monthId, accountId)
+            withContext(Dispatchers.Main) {
                 onSaved()
             }
         }
@@ -56,14 +58,16 @@ class TransactionUpsertViewModel @Inject constructor(
         amount: Int,
         type: TransactionType,
         currency: TransactionCurrency,
+        monthId: Int,
+        accountId: Int,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val editingTransaction = uiState.value.transactionDetails!!;
             updateTransactionUseCase(
                 editingTransaction.copy(
                     name = transactionName,
-                    accountId = uiState.value.accountId,
-                    monthId = uiState.value.monthId,
+                    accountId = accountId,
+                    monthId = monthId,
                     year = uiState.value.year,
                     currency = currency,
                     type = type,
@@ -78,6 +82,8 @@ class TransactionUpsertViewModel @Inject constructor(
         amount: Int,
         type: TransactionType,
         currency: TransactionCurrency,
+        monthId: Int,
+        accountId: Int,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             createNewTransactionUseCase(
@@ -86,8 +92,8 @@ class TransactionUpsertViewModel @Inject constructor(
                 type = type,
                 currency = currency,
                 year = uiState.value.year,
-                monthId = uiState.value.monthId,
-                accountId = uiState.value.accountId,
+                monthId = monthId,
+                accountId = accountId,
             )
         }
     }
