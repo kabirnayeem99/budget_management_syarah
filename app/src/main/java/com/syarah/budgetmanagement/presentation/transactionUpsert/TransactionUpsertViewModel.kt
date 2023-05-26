@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,11 +39,15 @@ class TransactionUpsertViewModel @Inject constructor(
         amount: Int,
         type: TransactionType,
         currency: TransactionCurrency,
+        onSaved: () -> Unit,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             val isUpdate = uiState.value.transactionDetails != null
             if (isUpdate) createNewTransaction(transactionName, amount, type, currency)
             else updateTransaction(transactionName, amount, type, currency)
+            withContext(Dispatchers.Main){
+                onSaved()
+            }
         }
     }
 

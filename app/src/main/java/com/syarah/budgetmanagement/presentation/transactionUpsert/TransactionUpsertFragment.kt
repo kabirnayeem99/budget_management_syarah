@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentTransactionUpsertBinding
+import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
+import com.syarah.budgetmanagement.domain.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -54,10 +56,20 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun saveTransaction(){
+    private fun saveTransaction() {
         lifecycleScope.launch {
-//            val transactionName = etN
-//            viewModel.createOrUpdateTransaction()
+            val transactionName = binding.etName.text.toString()
+            val amount = binding.etAmount.text.toString().toInt()
+            val type =
+                if (binding.tbType.checkedButtonId == R.id.btn_expense) TransactionType.Expense else TransactionType.Income
+            val currency =
+                if (binding.tbCurrency.checkedButtonId == R.id.btn_dinar) TransactionCurrency.Dinar else TransactionCurrency.Dollar
+
+            viewModel.createOrUpdateTransaction(transactionName = transactionName,
+                amount = amount,
+                type = type,
+                currency = currency,
+                onSaved = { navController.navigateUp() })
         }
     }
 }
