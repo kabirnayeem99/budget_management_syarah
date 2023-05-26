@@ -20,10 +20,6 @@ object DataSourceModule {
         return AccountRemoteDataSource()
     }
 
-    @Provides
-    fun provideMonthLocalDataSource(): MonthLocalDataSource {
-        return MonthLocalDataSource()
-    }
 
 
     @Provides

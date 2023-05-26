@@ -30,7 +30,7 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() 
 
     inner class AccountViewHolder(private val binding: ListItemAccountBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun fillData(account: Account) {
+        fun bind(account: Account) {
             val context = binding.root.context
             binding.apply {
                 tvAccountName.text = account.name
@@ -68,7 +68,7 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() 
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = differ.currentList[position]
-        holder.fillData(account)
+        holder.bind(account)
     }
 
 

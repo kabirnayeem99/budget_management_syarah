@@ -9,5 +9,56 @@
         android:id="@+id/accountsFragment"
         android:name="com.syarah.budgetmanagement.presentation.accounts.AccountsFragment"
         android:label="AccountsFragment"
-        tools:layout="@layout/fragment_accounts" />
+        tools:layout="@layout/fragment_accounts">
+        <action
+            android:id="@+id/action_accountsFragment_to_monthsFragment"
+            app:destination="@id/monthsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/monthsFragment"
+        android:name="com.syarah.budgetmanagement.presentation.months.MonthsFragment"
+        android:label="MonthsFragment"
+        tools:layout="@layout/fragment_months">
+        <action
+            android:id="@+id/action_monthsFragment_to_transactionDetailsFragment"
+            app:destination="@id/transactionDetailsFragment" />
+        <argument
+            android:name="account_id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionDetailsFragment"
+        android:name="com.syarah.budgetmanagement.presentation.transactionDetails.TransactionDetailsFragment"
+        android:label="TransactionDetailsFragment"
+        tools:layout="@layout/fragment_transaction_details">
+        <action
+            android:id="@+id/action_transactionDetailsFragment_to_transactionUpsertFragment"
+            app:destination="@id/transactionUpsertFragment" />
+        <argument
+            android:name="month_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="year"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="account_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionUpsertFragment"
+        android:name="com.syarah.budgetmanagement.presentation.transactionUpsert.TransactionUpsertFragment"
+        android:label="TransactionUpsertFragment"
+        tools:layout="@layout/fragment_transaction_upsert" >
+        <argument
+            android:name="transaction_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

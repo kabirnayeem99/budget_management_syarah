@@ -9,28 +9,19 @@ fun List<MonthLocalDto>.toMonths(): List<Month> {
             id = dto.id,
             monthId = dto.monthId,
             year = dto.year,
-            presentableDate = dto.presentableDate,
-            dollarExpense = dto.dollarExpense,
-            dinarExpense = dto.dinarExpense,
-            dollarIncome = dto.dollarIncome,
-            dinarIncome = dto.dinarIncome,
             accountId = dto.accountId,
         )
     }
 }
 
-fun List<Month>.toMonthDtoList(): List<MonthLocalDto> {
-    return map { entity ->
-        MonthLocalDto(
-            id = entity.id,
-            monthId = entity.monthId,
-            year = entity.year,
-            presentableDate = entity.presentableDate,
-            dollarExpense = entity.dollarExpense,
-            dinarExpense = entity.dinarExpense,
-            dollarIncome = entity.dollarIncome,
-            dinarIncome = entity.dinarIncome,
-            accountId = entity.accountId,
-        )
-    }
+fun List<Month>.toMonthDtoList(): List<MonthLocalDto> = map { entity -> entity.toMonthDto() }
+
+
+fun Month.toMonthDto(): MonthLocalDto {
+    return MonthLocalDto(
+        id = this.id,
+        monthId = this.monthId,
+        year = this.year,
+        accountId = this.accountId,
+    )
 }

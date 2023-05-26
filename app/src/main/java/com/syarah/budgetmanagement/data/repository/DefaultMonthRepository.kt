@@ -1,25 +1,21 @@
 package com.syarah.budgetmanagement.data.repository
 
+import com.syarah.budgetmanagement.data.datasource.localDataSource.MonthLocalDataSource
 import com.syarah.budgetmanagement.domain.entity.Month
 import com.syarah.budgetmanagement.domain.repository.MonthRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class DefaultMonthRepository: MonthRepository {
-    override suspend fun addMonth(month: Month) {
-        TODO("Not yet implemented")
-    }
+class DefaultMonthRepository @Inject constructor(
+    private val monthLocalDataSource: MonthLocalDataSource
+) : MonthRepository {
+    override suspend fun addMonth(month: Month) = monthLocalDataSource.addMonth(month)
 
-    override suspend fun updateMonth(month: Month) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun updateMonth(month: Month) = monthLocalDataSource.updateMonth(month)
 
-    override suspend fun deleteMonth(month: Month) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteMonth(month: Month)  = monthLocalDataSource.deleteMonth(month)
 
-    override suspend fun getMonths(): Flow<List<Month>> {
-        TODO("Not yet implemented")
-    }
+    override  fun getMonths(): Flow<List<Month>> = monthLocalDataSource.getMonths()
 
     override suspend fun getMonth(id: Int): Month {
         TODO("Not yet implemented")

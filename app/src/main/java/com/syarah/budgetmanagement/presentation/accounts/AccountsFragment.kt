@@ -16,6 +16,7 @@ import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentAccountsBinding
 import com.syarah.budgetmanagement.domain.entity.Account
+import com.syarah.budgetmanagement.presentation.months.MonthsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,7 +46,6 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
         }
     }
 
-
     private fun setUpViews() {
         activity?.title = context?.getString(R.string.label_accounts)
         setupMenu()
@@ -55,9 +55,15 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
                 adapter = accountAdapter
             }
         }
-        accountAdapter.setOnClick { }
+        accountAdapter.setOnClick { account -> navigateToMonthScreen(account) }
         accountAdapter.setOnDelete { account -> viewModel.deleteAccount(account) }
         accountAdapter.setOnEdit { account -> showAdEditAccountDialog(account) }
+    }
+
+    private fun navigateToMonthScreen(account: Account) {
+        val direction =
+            AccountsFragmentDirections.actionAccountsFragmentToMonthsFragment(accountId = account.id)
+        navController.navigate(direction)
     }
 
     private fun setupMenu() {
