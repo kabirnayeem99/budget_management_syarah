@@ -8,3 +8,11 @@
 - Uses CLEAN Architecture as architectural patterns.
 - Makes use of Jetpack libraries
 - Supports two languages (Arabic and English)
+
+
+## سمات
+- يتبع التطبيق إرشادات Material Design 3
+- تلتزم بصرامة بمبادئ SOLID
+- يستخدم CLEAN Architecture كنماذج معمارية.
+- يستخدم مكتبات Jetpack
+- يدعم لغتين (العربية والإنجليزية)
