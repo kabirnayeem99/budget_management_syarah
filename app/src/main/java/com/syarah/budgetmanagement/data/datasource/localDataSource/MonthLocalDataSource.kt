@@ -3,12 +3,18 @@ package com.syarah.budgetmanagement.data.datasource.localDataSource
 import com.syarah.budgetmanagement.data.mapper.toMonthDto
 import com.syarah.budgetmanagement.data.mapper.toMonths
 import com.syarah.budgetmanagement.data.service.database.dao.MonthDao
+import com.syarah.budgetmanagement.data.service.database.dao.TransactionDao
 import com.syarah.budgetmanagement.domain.entity.Month
+import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
+import com.syarah.budgetmanagement.domain.entity.TransactionType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MonthLocalDataSource @Inject constructor(private val monthDao: MonthDao) {
+class MonthLocalDataSource @Inject constructor(
+    private val monthDao: MonthDao,
+    private val transactionDao: TransactionDao,
+) {
 
     suspend fun addMonth(month: Month) = monthDao.addMonth(month.toMonthDto())
 
@@ -16,6 +22,38 @@ class MonthLocalDataSource @Inject constructor(private val monthDao: MonthDao) {
 
     suspend fun deleteMonth(month: Month) = monthDao.deleteMonth(month.toMonthDto())
 
-    fun getMonths(accountId: Int): Flow<List<Month>> = monthDao.getMonths(accountId).map { dtoList -> dtoList.toMonths() }
+    fun getMonths(accountId: Int): Flow<List<Month>> =
+        monthDao.getMonths(accountId).map { dtoList ->
+            dtoList.toMonths().map { month ->
+                val transactions = transactionDao.getTransactionsByMonth(month.id)
+                var dinarExpense = 0
+                var dinarIncome = 0
+                var dollarExpense = 0
+                var dollarIncome = 0
+                transactions.forEach { transaction ->
+                    when (transaction.currency) {
+                        TransactionCurrency.Dinar -> {
+                            when (transaction.type) {
+                                TransactionType.Expense -> dinarExpense += transaction.total
+                                TransactionType.Income -> dinarIncome += transaction.total
+                            }
+                        }
+
+                        TransactionCurrency.Dollar -> {
+                            when (transaction.type) {
+                                TransactionType.Expense -> dollarExpense += transaction.total
+                                TransactionType.Income -> dollarIncome += transaction.total
+                            }
+                        }
+                    }
+                }
+                month.copy(
+                    dollarIncome = dollarIncome,
+                    dollarExpense = dollarExpense,
+                    dinarIncome = dinarIncome,
+                    dinarExpense = dinarExpense,
+                )
+            }
+        }
 
 }

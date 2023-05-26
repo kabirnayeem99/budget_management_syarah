@@ -39,9 +39,9 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MonthViewHolder>() {
                 tvCurrencyDinarSpending.text =
                     context.getString(R.string.dinar_placeholder, month.dinarExpense)
                 tvCurrencyDollarSpending.text =
-                    context.getString(R.string.dinar_placeholder, month.dollarExpense)
+                    context.getString(R.string.dollar_placeholder, month.dollarExpense)
                 tvCurrencyDollarEarning.text =
-                    context.getString(R.string.dinar_placeholder, month.dollarIncome)
+                    context.getString(R.string.dollar_placeholder, month.dollarIncome)
 
                 root.setOnClickListener { _onClick?.let { func -> func(month) } }
                 ivDeleteButton.setOnClickListener { _onDelete?.let { func -> func(month) } }
