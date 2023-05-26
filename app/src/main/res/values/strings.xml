@@ -14,4 +14,12 @@
     <string name="label_months">Months</string>
     <string name="hint_select_month">Select month</string>
     <string name="label_transaction_details">Transaction Details</string>
+    <string name="action_save">Save</string>
+    <string name="label_transaction_create_or_update">Transaction Create/Update</string>
+    <string name="hint_add_transaction_name">Add transaction name</string>
+    <string name="hint_add_amount">Add amount</string>
+    <string name="dollar">Dollar</string>
+    <string name="dinar">Dinar</string>
+    <string name="label_expense">Expense</string>
+    <string name="label_income">Income</string>
 </resources>
