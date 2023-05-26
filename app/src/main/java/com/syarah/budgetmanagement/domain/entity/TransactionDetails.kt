@@ -9,6 +9,8 @@ data class TransactionDetails(
     val total: Int,
     val currency: TransactionCurrency,
     val type: TransactionType,
+    val monthId: Int,
+    val accountId: Int,
 )
 
 

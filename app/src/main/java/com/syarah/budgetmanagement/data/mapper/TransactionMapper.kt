@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.data.mapper
 
 import com.syarah.budgetmanagement.data.dto.TransactionLocalDto
 import com.syarah.budgetmanagement.domain.entity.Transaction
+import com.syarah.budgetmanagement.domain.entity.TransactionDetails
 
 fun List<TransactionLocalDto>.toTransactions(): List<Transaction> {
     return map { dto ->
@@ -20,16 +21,49 @@ fun List<TransactionLocalDto>.toTransactions(): List<Transaction> {
 }
 
 fun List<Transaction>.toTransactionDtoList(): List<TransactionLocalDto> {
-    return map { entity ->
-        TransactionLocalDto(
-            id = entity.id,
-            date = entity.date,
-            name = entity.name,
-            monthId = entity.monthId,
-            accountId = entity.accountId,
-            total = entity.total,
-            currency = entity.currency,
-            type = entity.type,
-        )
-    }
+    return map { entity -> entity.toTransactionDto() }
+}
+
+
+fun Transaction.toTransactionDto(): TransactionLocalDto {
+    val entity = this
+    return TransactionLocalDto(
+        id = entity.id,
+        date = entity.date,
+        name = entity.name,
+        monthId = entity.monthId,
+        accountId = entity.accountId,
+        total = entity.total,
+        currency = entity.currency,
+        type = entity.type,
+    )
+}
+
+
+fun TransactionLocalDto.toTransactionDetails(): TransactionDetails {
+    val entity = this
+    return TransactionDetails(
+        id = entity.id,
+        date = entity.date,
+        name = entity.name,
+        monthId = entity.monthId,
+        accountId = entity.accountId,
+        total = entity.total,
+        currency = entity.currency,
+        type = entity.type,
+    )
+}
+
+fun TransactionDetails.toTransactionDto(): TransactionLocalDto {
+    val entity = this
+    return TransactionLocalDto(
+        id = entity.id,
+        date = entity.date,
+        name = entity.name,
+        monthId = entity.monthId,
+        accountId = entity.accountId,
+        total = entity.total,
+        currency = entity.currency,
+        type = entity.type,
+    )
 }
