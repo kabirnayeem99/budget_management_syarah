@@ -69,7 +69,6 @@ class MonthsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             getMonthsUseCase(accountId).collect { results ->
                 results.onSuccess { months ->
-                    Timber.d(months.toString())
                     _uiState.update { it.copy(months = months, accountId = accountId) }
                 }
             }

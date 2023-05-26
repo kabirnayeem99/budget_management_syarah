@@ -8,6 +8,7 @@ import android.view.View
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -30,7 +31,7 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
         get() = R.layout.fragment_months
 
     private val monthAdapter by lazy { MonthAdapter() }
-    private val viewModel by activityViewModels<MonthsViewModel>()
+    private val viewModel by viewModels<MonthsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

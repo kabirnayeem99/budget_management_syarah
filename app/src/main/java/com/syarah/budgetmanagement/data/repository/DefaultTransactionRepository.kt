@@ -23,9 +23,8 @@ class DefaultTransactionRepository @Inject constructor(
     override fun getTransactions(
         accountId: Int,
         monthId: Int,
-        yearId: Int
     ): Flow<List<Transaction>> =
-        transactionLocalDataSource.getTransactions()
+        transactionLocalDataSource.getTransactions(accountId, monthId)
 
     override suspend fun getTransactionDetails(id: Int): TransactionDetails =
         transactionLocalDataSource.getTransactionDetails(id)

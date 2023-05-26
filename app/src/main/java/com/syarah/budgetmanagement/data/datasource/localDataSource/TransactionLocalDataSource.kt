@@ -20,8 +20,11 @@ class TransactionLocalDataSource @Inject constructor(private val transactionDao:
     suspend fun deleteTransaction(transaction: Transaction) =
         transactionDao.deleteTransaction(transaction.toTransactionDto())
 
-    fun getTransactions(): Flow<List<Transaction>> =
-        transactionDao.getTransactions().map { dtoList -> dtoList.toTransactions() }
+    fun getTransactions(
+        accountId: Int,
+        monthId: Int,
+    ): Flow<List<Transaction>> =
+        transactionDao.getTransactions(accountId, monthId).map { dtoList -> dtoList.toTransactions() }
 
     suspend fun getTransactionDetails(id: Int): TransactionDetails =
         transactionDao.getTransactionDetails(id).toTransactionDetails()

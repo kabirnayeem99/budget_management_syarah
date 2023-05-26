@@ -16,6 +16,6 @@ class MonthLocalDataSource @Inject constructor(private val monthDao: MonthDao) {
 
     suspend fun deleteMonth(month: Month) = monthDao.deleteMonth(month.toMonthDto())
 
-    fun getMonths(): Flow<List<Month>> = monthDao.getMonths().map { dtoList -> dtoList.toMonths() }
+    fun getMonths(accountId: Int): Flow<List<Month>> = monthDao.getMonths(accountId).map { dtoList -> dtoList.toMonths() }
 
 }

@@ -28,9 +28,9 @@ class TransactionDetailsViewModel @Inject constructor(
         }
     }
 
-    fun fetchTransactions(accountId: Int, monthId: Int, yearId: Int) {
+    fun fetchTransactions(accountId: Int, monthId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            getTransactionsUseCase(accountId, monthId, yearId).collect { result ->
+            getTransactionsUseCase(accountId, monthId).collect { result ->
                 result.onSuccess { transactions -> _uiState.update { it.copy(transactions = transactions) } }
             }
         }

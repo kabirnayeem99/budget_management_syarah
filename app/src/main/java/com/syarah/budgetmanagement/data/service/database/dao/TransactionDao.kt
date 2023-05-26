@@ -16,8 +16,8 @@ interface TransactionDao {
     @Delete
     suspend fun deleteTransaction(transaction: TransactionLocalDto)
 
-    @Query("SELECT * FROM transactions")
-    fun getTransactions(): Flow<List<TransactionLocalDto>>
+    @Query("SELECT * FROM transactions where accountId=:accountId AND monthId = :monthId")
+    fun getTransactions(accountId: Int, monthId: Int): Flow<List<TransactionLocalDto>>
 
     @Query("SELECT * FROM transactions WHERE id = :id")
     suspend fun getTransactionDetails(id: Int): TransactionLocalDto

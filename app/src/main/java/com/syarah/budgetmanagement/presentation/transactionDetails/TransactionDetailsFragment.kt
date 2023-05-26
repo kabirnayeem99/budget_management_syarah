@@ -38,8 +38,7 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
     private fun setUpData() {
         val accountId = args.accountId
         val monthId = args.monthId
-        val yearId = args.year
-        viewModel.fetchTransactions(accountId, monthId, yearId)
+        viewModel.fetchTransactions(accountId, monthId)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->

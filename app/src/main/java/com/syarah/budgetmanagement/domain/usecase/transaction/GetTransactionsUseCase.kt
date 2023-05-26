@@ -14,9 +14,8 @@ class GetTransactionsUseCase @Inject constructor(
     operator fun invoke(
         accountId: Int,
         monthId: Int,
-        yearId: Int,
     ): Flow<Result<List<Transaction>>> =
-        transactionRepository.getTransactions(accountId, monthId, yearId).catch { error ->
+        transactionRepository.getTransactions(accountId, monthId).catch { error ->
             Timber.e(error)
             Result.failure<Exception>(error)
         }

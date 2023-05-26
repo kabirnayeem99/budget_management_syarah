@@ -12,7 +12,7 @@ class GetMonthsUseCase @Inject constructor(
     private val monthRepository: MonthRepository,
 ) {
      operator fun invoke(accountId: Int): Flow<Result<List<Month>>> {
-        return monthRepository.getMonths().catch { e -> Result.failure<Exception>(e) }
+        return monthRepository.getMonths(accountId).catch { e -> Result.failure<Exception>(e) }
             .map { months -> Result.success(months) }
     }
 }

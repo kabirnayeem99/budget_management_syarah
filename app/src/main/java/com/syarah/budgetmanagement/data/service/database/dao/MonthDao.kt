@@ -15,8 +15,8 @@ interface MonthDao {
     @Delete
     suspend fun deleteMonth(month: MonthLocalDto)
 
-    @Query("SELECT * FROM months")
-    fun getMonths(): Flow<List<MonthLocalDto>>
+    @Query("SELECT * FROM months where accountId = :accountId")
+    fun getMonths(accountId: Int): Flow<List<MonthLocalDto>>
 
     @Query("SELECT * FROM months WHERE id = :id")
     suspend fun getMonth(id: Int): MonthLocalDto
