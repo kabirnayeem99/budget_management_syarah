@@ -1,5 +1,6 @@
 package com.syarah.budgetmanagement.data.datasource.localDataSource
 
+import com.google.gson.Gson
 import com.syarah.budgetmanagement.data.mapper.toAccountDto
 import com.syarah.budgetmanagement.data.mapper.toAccounts
 import com.syarah.budgetmanagement.data.service.database.dao.AccountDao
@@ -32,34 +33,46 @@ class AccountLocalDataSource @Inject constructor(
     fun getAccounts(): Flow<List<Account>> {
         return accountDao.getAccounts().map { dtoList ->
             withContext(Dispatchers.Default) {
-                dtoList.toAccounts().map { account ->
-                    val transactions = transactionDao.getTransactionsByAccount(account.id)
-                    var dinarExpense = 0
-                    var dinarIncome = 0
-                    var dollarExpense = 0
-                    var dollarIncome = 0
-                    transactions.forEach { transaction ->
-                        when (transaction.currency) {
-                            TransactionCurrency.Dinar -> {
-                                when (transaction.type) {
-                                    TransactionType.Expense -> dinarExpense += transaction.total
-                                    TransactionType.Income -> dinarIncome += transaction.total
-                                }
-                            }
+                dtoList.toAccounts().map { account -> calculateAccount(account) }
+            }
+        }
+    }
 
-                            TransactionCurrency.Dollar -> {
-                                when (transaction.type) {
-                                    TransactionType.Expense -> dollarExpense += transaction.total
-                                    TransactionType.Income -> dollarIncome += transaction.total
-                                }
-                            }
-                        }
+    private val gson by lazy { Gson() }
+    suspend fun getSerialisedAccounts(): String {
+        return withContext(Dispatchers.Default) {
+            val accounts = accountDao.getAccountsBlocking()
+                .toAccounts()
+                .map { calculateAccount(it) }
+            gson.toJson(accounts)
+        }
+    }
+
+    private suspend fun calculateAccount(account: Account): Account {
+        val transactions = transactionDao.getTransactionsByAccount(account.id)
+        var dinarExpense = 0
+        var dinarIncome = 0
+        var dollarExpense = 0
+        var dollarIncome = 0
+        transactions.forEach { transaction ->
+            when (transaction.currency) {
+                TransactionCurrency.Dinar -> {
+                    when (transaction.type) {
+                        TransactionType.Expense -> dinarExpense += transaction.total
+                        TransactionType.Income -> dinarIncome += transaction.total
                     }
-                    val dollarAmount = dollarIncome - dollarExpense
-                    val dinarAmount = dinarIncome - dinarExpense
-                    account.copy(dollarAmount = dollarAmount, dinarAmount = dinarAmount)
+                }
+
+                TransactionCurrency.Dollar -> {
+                    when (transaction.type) {
+                        TransactionType.Expense -> dollarExpense += transaction.total
+                        TransactionType.Income -> dollarIncome += transaction.total
+                    }
                 }
             }
         }
+        val dollarAmount = dollarIncome - dollarExpense
+        val dinarAmount = dinarIncome - dinarExpense
+        return account.copy(dollarAmount = dollarAmount, dinarAmount = dinarAmount)
     }
 }

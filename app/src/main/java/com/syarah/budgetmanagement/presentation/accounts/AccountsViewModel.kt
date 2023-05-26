@@ -6,6 +6,7 @@ import com.syarah.budgetmanagement.domain.entity.Account
 import com.syarah.budgetmanagement.domain.usecase.account.CreateNewAccountUseCase
 import com.syarah.budgetmanagement.domain.usecase.account.DeleteAccountUseCase
 import com.syarah.budgetmanagement.domain.usecase.account.GetAccountsUseCase
+import com.syarah.budgetmanagement.domain.usecase.account.GetSerialisedAccounts
 import com.syarah.budgetmanagement.domain.usecase.account.UpdateAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,10 +25,10 @@ class AccountsViewModel @Inject constructor(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val updateAccountUseCase: UpdateAccountUseCase,
+    private val getSerialisedAccounts: GetSerialisedAccounts,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AccountsUiState())
     val uiState = _uiState.asStateFlow()
-
 
 
     fun createOrUpdateAccount(name: String) {
@@ -59,7 +61,7 @@ class AccountsViewModel @Inject constructor(
         }
     }
 
-     fun fetchAccounts() {
+    fun fetchAccounts() {
         viewModelScope.launch(Dispatchers.IO) {
             getAccountsUseCase().collect { results ->
                 results.onFailure { e ->
@@ -67,6 +69,16 @@ class AccountsViewModel @Inject constructor(
                 }.onSuccess { accounts ->
                     Timber.d(accounts.toString())
                     _uiState.update { it.copy(accounts = accounts) }
+                }
+            }
+        }
+    }
+
+    fun fetchSerialisedAccounts(onFetched: (String) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getSerialisedAccounts().onSuccess { serialisedAccounts ->
+                withContext(Dispatchers.Main) {
+                    onFetched(serialisedAccounts)
                 }
             }
         }
