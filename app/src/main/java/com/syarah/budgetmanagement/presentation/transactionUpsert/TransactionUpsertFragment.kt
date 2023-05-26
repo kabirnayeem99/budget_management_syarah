@@ -18,7 +18,9 @@ import com.syarah.budgetmanagement.databinding.FragmentTransactionUpsertBinding
 import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
 import com.syarah.budgetmanagement.domain.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @AndroidEntryPoint
 class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>() {
@@ -37,7 +39,7 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
         activity?.title = context?.getString(R.string.label_transaction_create_or_update)
         setupMenu()
         binding.apply {
-
+            tvDate.text = Date().toString()
         }
     }
 
@@ -47,7 +49,16 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
         lifecycleScope.launch {
             viewModel.fetchTransactionDetails(args.transactionId)
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-
+                viewModel.uiState.collect {
+                    if (it.transactionDetails != null) {
+                        binding.apply {
+                            etName.setText(it.transactionDetails.name)
+                            etAmount.setText(it.transactionDetails.amount.toString())
+                            tbCurrency.check(if (it.transactionDetails.currency == TransactionCurrency.Dinar) R.id.btn_dinar else R.id.btn_dollar)
+                            tbType.check(if ((it.transactionDetails.type == TransactionType.Income)) R.id.btn_income else R.id.btn_expense)
+                        }
+                    }
+                }
             }
         }
     }
