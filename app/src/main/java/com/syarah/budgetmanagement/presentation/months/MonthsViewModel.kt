@@ -29,10 +29,6 @@ class MonthsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MonthsUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        fetchMonths()
-    }
-
 
     fun addOrUpdateMonth(month: Int, year: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,7 +39,7 @@ class MonthsViewModel @Inject constructor(
 
     private fun addMonth(month: Int, year: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            addNewMonthUseCase(month, year)
+            addNewMonthUseCase(month, year, uiState.value.accountId)
         }
     }
 
@@ -61,11 +57,15 @@ class MonthsViewModel @Inject constructor(
         }
     }
 
-    private fun fetchMonths() {
+    fun fetchMonths(accountId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            getMonthsUseCase().collect { results ->
+            getMonthsUseCase(accountId).collect { results ->
                 results.onSuccess {
-                    _uiState.update { it.copy(months = results.getOrNull() ?: emptyList()) }
+                    _uiState.update {
+                        it.copy(
+                            months = results.getOrNull() ?: emptyList(), accountId = accountId
+                        )
+                    }
                 }
             }
         }

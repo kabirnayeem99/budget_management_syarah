@@ -6,12 +6,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentMonthsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -40,8 +40,11 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
         }
     }
 
+    private val args: MonthsFragmentArgs by navArgs()
     private fun setUpData() {
         lifecycleScope.launch {
+            val accountId = args.accountId
+            viewModel.fetchMonths(accountId)
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     monthAdapter.submitList(uiState.months)

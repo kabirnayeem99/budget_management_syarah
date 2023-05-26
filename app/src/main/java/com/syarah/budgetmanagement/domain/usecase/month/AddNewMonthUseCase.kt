@@ -11,7 +11,7 @@ class AddNewMonthUseCase @Inject constructor(
     private val monthRepository: MonthRepository,
 ) {
 
-    suspend operator fun invoke(month: Int, year: Int): Result<String> {
+    suspend operator fun invoke(month: Int, year: Int, accountId: Int): Result<String> {
         return try {
             val newMonth = Month(
                 id = UUID.randomUUID().mostSignificantBits.toInt(),

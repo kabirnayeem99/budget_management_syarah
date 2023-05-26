@@ -7,4 +7,5 @@ data class MonthsUiState(
     val errorMessage: String? = null,
     val months: List<Month> = emptyList(),
     val editableMonth: Month? = null,
+    val accountId: Int = -1,
 )

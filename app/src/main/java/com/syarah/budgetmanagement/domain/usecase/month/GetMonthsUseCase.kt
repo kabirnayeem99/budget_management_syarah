@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GetMonthsUseCase @Inject constructor(
     private val monthRepository: MonthRepository,
 ) {
-    suspend operator fun invoke(): Flow<Result<List<Month>>> {
+     operator fun invoke(accountId: Int): Flow<Result<List<Month>>> {
         return monthRepository.getMonths().catch { e -> Result.failure<Exception>(e) }
             .map { months -> Result.success(months) }
     }
