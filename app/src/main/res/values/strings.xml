@@ -11,4 +11,6 @@
     <string name="hint_dinar_amount">Enter your dinars</string>
     <string name="hint_account_name">Enter account name</string>
     <string name="add_account">Add Account</string>
+    <string name="label_months">Months</string>
+    <string name="hint_select_month">Select month</string>
 </resources>

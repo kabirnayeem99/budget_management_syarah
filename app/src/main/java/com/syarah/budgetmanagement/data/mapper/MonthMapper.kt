@@ -10,6 +10,7 @@ fun List<MonthLocalDto>.toMonths(): List<Month> {
             monthId = dto.monthId,
             year = dto.year,
             accountId = dto.accountId,
+            presentableDate = "${dto.monthId}/${dto.year}"
         )
     }
 }

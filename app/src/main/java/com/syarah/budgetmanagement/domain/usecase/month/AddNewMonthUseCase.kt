@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.domain.usecase.month
 
 import com.syarah.budgetmanagement.domain.entity.Month
 import com.syarah.budgetmanagement.domain.repository.MonthRepository
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import java.util.UUID
@@ -17,10 +18,12 @@ class AddNewMonthUseCase @Inject constructor(
                 id = UUID.randomUUID().mostSignificantBits.toInt(),
                 monthId = month,
                 year = year,
+                accountId = accountId
             )
             monthRepository.addMonth(newMonth)
             Result.success("${month}-${year}")
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }

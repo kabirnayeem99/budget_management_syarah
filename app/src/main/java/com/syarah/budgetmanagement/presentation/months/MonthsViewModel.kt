@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -32,6 +33,7 @@ class MonthsViewModel @Inject constructor(
 
     fun addOrUpdateMonth(month: Int, year: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            Timber.d("$month-$year")
             val isUpdate = uiState.value.editableMonth != null
             if (isUpdate) updateMonth(month, year) else addMonth(month, year)
         }
@@ -50,6 +52,12 @@ class MonthsViewModel @Inject constructor(
         }
     }
 
+    fun setEditingMonth(month: Month?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update { it.copy(editableMonth = month) }
+        }
+    }
+
 
     fun deleteMonth(month: Month) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -60,12 +68,9 @@ class MonthsViewModel @Inject constructor(
     fun fetchMonths(accountId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             getMonthsUseCase(accountId).collect { results ->
-                results.onSuccess {
-                    _uiState.update {
-                        it.copy(
-                            months = results.getOrNull() ?: emptyList(), accountId = accountId
-                        )
-                    }
+                results.onSuccess { months ->
+                    Timber.d(months.toString())
+                    _uiState.update { it.copy(months = months, accountId = accountId) }
                 }
             }
         }
