@@ -8,6 +8,6 @@ interface TransactionRepository {
     suspend fun addTransaction(transaction: TransactionDetails)
     suspend fun updateTransaction(transaction: Transaction)
     suspend fun deleteTransaction(transaction: Transaction)
-     fun getTransactions(): Flow<List<Transaction>>
+     fun getTransactions(accountId: Int, monthId: Int, yearId: Int,): Flow<List<Transaction>>
     suspend fun getTransactionDetails(id: Int): TransactionDetails
 }

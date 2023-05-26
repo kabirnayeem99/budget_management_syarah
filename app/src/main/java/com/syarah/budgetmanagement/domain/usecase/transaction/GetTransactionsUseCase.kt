@@ -10,8 +10,8 @@ import javax.inject.Inject
 class GetTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) {
-    operator fun invoke(): Flow<Result<List<Transaction>>> =
-        transactionRepository.getTransactions().catch { error -> Result.failure<Exception>(error) }
+    operator fun invoke(accountId: Int, monthId: Int, yearId: Int,): Flow<Result<List<Transaction>>> =
+        transactionRepository.getTransactions(accountId, monthId, yearId).catch { error -> Result.failure<Exception>(error) }
             .map { transactions -> Result.success(transactions) }
 
 }

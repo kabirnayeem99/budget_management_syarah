@@ -9,11 +9,18 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentTransactionDetailsBinding
+import com.syarah.budgetmanagement.domain.entity.Transaction
+import com.syarah.budgetmanagement.presentation.months.MonthsFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBinding>() {
@@ -27,6 +34,22 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
         setupMenu()
+        setUpData()
+    }
+
+    private val args: TransactionDetailsFragmentArgs by navArgs()
+    private fun setUpData() {
+        val accountId = args.accountId
+        val monthId = args.monthId
+        val yearId = args.year
+        viewModel.fetchTransactions(accountId, monthId, yearId)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {state->
+                    transactionAdapter.submitList(state.transactions)
+                }
+            }
+        }
     }
 
     private fun setUpViews() {
@@ -38,7 +61,7 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
                 adapter = transactionAdapter
             }
         }
-//        transactionAdapter.setOnClick { transaction -> navigateToMonthScreen(account) }
+        transactionAdapter.setOnClick { transaction -> navigateToTransactionUpsertScreen(transaction) }
         transactionAdapter.setOnDelete { transaction -> viewModel.deleteTransaction(transaction) }
     }
 
@@ -52,10 +75,18 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
-//                    R.id.menu_add -> showAdEditAccountDialog(null)
+                    R.id.menu_add -> navigateToTransactionUpsertScreen(null)
                 }
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun navigateToTransactionUpsertScreen(transaction: Transaction?) {
+        navController.navigate(
+            TransactionDetailsFragmentDirections.actionTransactionDetailsFragmentToTransactionUpsertFragment(
+                transactionId = transaction?.id ?: -1
+            )
+        )
     }
 }
