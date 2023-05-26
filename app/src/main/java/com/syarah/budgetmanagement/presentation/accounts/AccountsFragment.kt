@@ -38,6 +38,7 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
 
     private fun setData() {
         lifecycleScope.launch {
+            viewModel.fetchAccounts()
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     accountAdapter.submitList(uiState.accounts)

@@ -27,9 +27,7 @@ class AccountsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AccountsUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        fetchAccounts()
-    }
+
 
     fun createOrUpdateAccount(name: String) {
         val isUpdate = uiState.value.editableAccount != null
@@ -61,7 +59,7 @@ class AccountsViewModel @Inject constructor(
         }
     }
 
-    private fun fetchAccounts() {
+     fun fetchAccounts() {
         viewModelScope.launch(Dispatchers.IO) {
             getAccountsUseCase().collect { results ->
                 results.onFailure { e ->

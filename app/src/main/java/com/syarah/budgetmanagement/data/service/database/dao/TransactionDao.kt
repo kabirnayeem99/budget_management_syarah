@@ -22,6 +22,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions where monthId = :monthId")
     suspend fun getTransactionsByMonth(monthId: Int): List<TransactionLocalDto>
 
+    @Query("SELECT * FROM transactions where accountId = :accountId")
+    suspend fun getTransactionsByAccount(accountId: Int): List<TransactionLocalDto>
+
     @Query("SELECT * FROM transactions WHERE id = :id")
     suspend fun getTransactionDetails(id: Int): TransactionLocalDto
 }

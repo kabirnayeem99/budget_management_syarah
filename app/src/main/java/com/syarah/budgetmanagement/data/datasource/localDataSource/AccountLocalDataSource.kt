@@ -3,12 +3,20 @@ package com.syarah.budgetmanagement.data.datasource.localDataSource
 import com.syarah.budgetmanagement.data.mapper.toAccountDto
 import com.syarah.budgetmanagement.data.mapper.toAccounts
 import com.syarah.budgetmanagement.data.service.database.dao.AccountDao
+import com.syarah.budgetmanagement.data.service.database.dao.TransactionDao
 import com.syarah.budgetmanagement.domain.entity.Account
+import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
+import com.syarah.budgetmanagement.domain.entity.TransactionType
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AccountLocalDataSource @Inject constructor(private val accountDao: AccountDao) {
+class AccountLocalDataSource @Inject constructor(
+    private val accountDao: AccountDao,
+    private val transactionDao: TransactionDao,
+) {
     suspend fun addAccount(account: Account) {
         accountDao.addAccount(account.toAccountDto())
     }
@@ -22,6 +30,36 @@ class AccountLocalDataSource @Inject constructor(private val accountDao: Account
     }
 
     fun getAccounts(): Flow<List<Account>> {
-        return accountDao.getAccounts().map { dtoList -> dtoList.toAccounts() }
+        return accountDao.getAccounts().map { dtoList ->
+            withContext(Dispatchers.Default) {
+                dtoList.toAccounts().map { account ->
+                    val transactions = transactionDao.getTransactionsByAccount(account.id)
+                    var dinarExpense = 0
+                    var dinarIncome = 0
+                    var dollarExpense = 0
+                    var dollarIncome = 0
+                    transactions.forEach { transaction ->
+                        when (transaction.currency) {
+                            TransactionCurrency.Dinar -> {
+                                when (transaction.type) {
+                                    TransactionType.Expense -> dinarExpense += transaction.total
+                                    TransactionType.Income -> dinarIncome += transaction.total
+                                }
+                            }
+
+                            TransactionCurrency.Dollar -> {
+                                when (transaction.type) {
+                                    TransactionType.Expense -> dollarExpense += transaction.total
+                                    TransactionType.Income -> dollarIncome += transaction.total
+                                }
+                            }
+                        }
+                    }
+                    val dollarAmount = dollarIncome - dollarExpense
+                    val dinarAmount = dinarIncome - dinarExpense
+                    account.copy(dollarAmount = dollarAmount, dinarAmount = dinarAmount)
+                }
+            }
+        }
     }
 }
