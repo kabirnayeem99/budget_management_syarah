@@ -60,5 +60,17 @@
             android:name="transaction_id"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="month_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="year"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="account_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
