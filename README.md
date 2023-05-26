@@ -1,6 +1,6 @@
-# Budget Management App - تطبيق إدارة الميزانية
-
 <img src="https://i.ibb.co/FVjwrPD/play-store-512.png" height=90 alt="play-store-512" border="0">
+
+# Budget Management App - تطبيق إدارة الميزانية
 
 ## Features
 - App follows Material Design 3 guidelines 
