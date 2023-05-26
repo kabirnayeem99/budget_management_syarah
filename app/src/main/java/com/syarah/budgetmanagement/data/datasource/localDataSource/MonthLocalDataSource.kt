@@ -33,10 +33,12 @@ class MonthLocalDataSource @Inject constructor(
 
     private suspend fun calculateMontTransaction(month: Month): Month {
         val transactions = transactionDao.getTransactionsByMonth(month.id)
+
         var dinarExpense = 0
         var dinarIncome = 0
         var dollarExpense = 0
         var dollarIncome = 0
+
         transactions.forEach { transaction ->
             when (transaction.currency) {
                 TransactionCurrency.Dinar -> {
@@ -54,6 +56,7 @@ class MonthLocalDataSource @Inject constructor(
                 }
             }
         }
+
         return month.copy(
             dollarIncome = dollarIncome,
             dollarExpense = dollarExpense,

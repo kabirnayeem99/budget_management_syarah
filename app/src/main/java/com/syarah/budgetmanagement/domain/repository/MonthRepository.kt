@@ -7,6 +7,5 @@ interface MonthRepository {
     suspend fun addMonth(month: Month)
     suspend fun updateMonth(month: Month)
     suspend fun deleteMonth(month: Month)
-     fun getMonths(accountId: Int): Flow<List<Month>>
-    suspend fun getMonth(id: Int): Month
+    fun getMonths(accountId: Int): Flow<List<Month>>
 }

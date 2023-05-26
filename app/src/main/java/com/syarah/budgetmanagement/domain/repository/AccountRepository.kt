@@ -8,7 +8,6 @@ interface AccountRepository {
     suspend fun updateAccount(account: Account)
     suspend fun deleteAccount(account: Account)
     fun getAccounts(): Flow<List<Account>>
-    suspend fun getAccount(id: Int): Account
     suspend fun getSerialisedAccounts(): String
     suspend fun saveSerialisedAccounts(serialisedAccounts: String)
 }

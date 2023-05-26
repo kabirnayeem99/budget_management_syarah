@@ -19,7 +19,6 @@ class DefaultTransactionRepository @Inject constructor(
     override suspend fun deleteTransaction(transaction: Transaction) =
         transactionLocalDataSource.deleteTransaction(transaction)
 
-
     override fun getTransactions(
         accountId: Int,
         monthId: Int,

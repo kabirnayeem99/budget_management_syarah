@@ -25,6 +25,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
                 android:textAlignment="textStart"
                 android:textColor="?colorOnBackground"
                 app:drawableEndCompat="@drawable/ic_month"

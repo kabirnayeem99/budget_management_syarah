@@ -20,11 +20,6 @@ fun List<TransactionLocalDto>.toTransactions(): List<Transaction> {
     }
 }
 
-fun List<Transaction>.toTransactionDtoList(): List<TransactionLocalDto> {
-    return map { entity -> entity.toTransactionDto() }
-}
-
-
 fun Transaction.toTransactionDto(): TransactionLocalDto {
     val entity = this
     return TransactionLocalDto(
@@ -38,7 +33,6 @@ fun Transaction.toTransactionDto(): TransactionLocalDto {
         type = entity.type,
     )
 }
-
 
 fun TransactionLocalDto.toTransactionDetails(): TransactionDetails {
     val entity = this

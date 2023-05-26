@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.domain.usecase.account
 
 import com.syarah.budgetmanagement.domain.entity.Account
 import com.syarah.budgetmanagement.domain.repository.AccountRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class UpdateAccountUseCase @Inject constructor(private val accountRepository: AccountRepository) {
@@ -11,6 +12,7 @@ class UpdateAccountUseCase @Inject constructor(private val accountRepository: Ac
             accountRepository.updateAccount(account)
             return Result.success(account.name)
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }

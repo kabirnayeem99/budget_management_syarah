@@ -30,11 +30,9 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMonthRepository(
-        monthLocalDataSource: MonthLocalDataSource
-    ): MonthRepository {
-        return DefaultMonthRepository(monthLocalDataSource)
-    }
+    fun provideMonthRepository(monthLocalDataSource: MonthLocalDataSource): MonthRepository =
+        DefaultMonthRepository(monthLocalDataSource)
+
 
     @Provides
     @Singleton

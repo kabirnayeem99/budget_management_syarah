@@ -62,7 +62,7 @@ class TransactionUpsertViewModel @Inject constructor(
         accountId: Int,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            val editingTransaction = uiState.value.transactionDetails!!;
+            val editingTransaction = uiState.value.transactionDetails!!
             updateTransactionUseCase(
                 editingTransaction.copy(
                     name = transactionName,

@@ -7,10 +7,6 @@ fun List<AccountLocalDto>.toAccounts(): List<Account> {
     return map { dto -> dto.toAccount() }
 }
 
-fun List<Account>.toAccountDtoList(): List<AccountLocalDto> {
-    return map { entity -> entity.toAccountDto() }
-}
-
 fun Account.toAccountDto(): AccountLocalDto {
     return AccountLocalDto(id, name)
 }

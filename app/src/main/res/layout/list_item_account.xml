@@ -25,6 +25,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
                 android:textAlignment="textStart"
                 android:textColor="?colorOnBackground"
                 app:drawableEndCompat="@drawable/ic_account"
@@ -65,10 +66,10 @@
                 app:tint="?colorControlNormal" />
 
             <ImageButton
-                android:contentDescription="@string/hint_delete_account"
                 android:id="@+id/iv_delete_button"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:contentDescription="@string/hint_delete_account"
                 android:src="@drawable/ic_delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -33,7 +33,7 @@ class AccountLocalDataSource @Inject constructor(
     fun getAccounts(): Flow<List<Account>> {
         return accountDao.getAccounts().map { dtoList ->
             withContext(Dispatchers.Default) {
-                dtoList.toAccounts().map { account -> calculateAccount(account) }
+                dtoList.toAccounts().map { account -> calculateAccountTransactions(account) }
             }
         }
     }
@@ -41,19 +41,20 @@ class AccountLocalDataSource @Inject constructor(
     private val gson by lazy { Gson() }
     suspend fun getSerialisedAccounts(): String {
         return withContext(Dispatchers.Default) {
-            val accounts = accountDao.getAccountsBlocking()
-                .toAccounts()
-                .map { calculateAccount(it) }
+            val accounts = accountDao.getAccountsBlocking().toAccounts()
+                .map { calculateAccountTransactions(it) }
             gson.toJson(accounts)
         }
     }
 
-    private suspend fun calculateAccount(account: Account): Account {
+    private suspend fun calculateAccountTransactions(account: Account): Account {
         val transactions = transactionDao.getTransactionsByAccount(account.id)
+
         var dinarExpense = 0
         var dinarIncome = 0
         var dollarExpense = 0
         var dollarIncome = 0
+
         transactions.forEach { transaction ->
             when (transaction.currency) {
                 TransactionCurrency.Dinar -> {
@@ -71,8 +72,10 @@ class AccountLocalDataSource @Inject constructor(
                 }
             }
         }
+
         val dollarAmount = dollarIncome - dollarExpense
         val dinarAmount = dinarIncome - dinarExpense
+
         return account.copy(dollarAmount = dollarAmount, dinarAmount = dinarAmount)
     }
 }

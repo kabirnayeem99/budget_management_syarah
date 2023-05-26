@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.syarah.budgetmanagement.R
+import com.syarah.budgetmanagement.core.utility.toArabic
 import com.syarah.budgetmanagement.databinding.ListItemTransactionBinding
 import com.syarah.budgetmanagement.domain.entity.Transaction
 import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
 import com.syarah.budgetmanagement.domain.entity.TransactionType
+import java.time.format.DateTimeFormatter
+import java.time.format.DecimalStyle
+import java.time.format.FormatStyle
+import java.util.Locale
 
 class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
@@ -31,17 +36,25 @@ class TransactionAdapter : RecyclerView.Adapter<TransactionAdapter.TransactionVi
         fun bind(transaction: Transaction) {
             val context = binding.root.context
             binding.apply {
+                val locale: Locale = context.resources.configuration.locales[0]
 
-                tvTransactionDate.text = transaction.date.toString()
+
+                tvTransactionDate.text = transaction.date.toLocaleString()
                 tvTransactionName.text = transaction.name
+
+                var total = transaction.total.toString()
+
+                if (locale.language == "ar") {
+                    total = total.toArabic()
+                }
 
                 val money = when (transaction.currency) {
                     TransactionCurrency.Dinar -> context.getString(
-                        R.string.dinar_placeholder, transaction.total
+                        R.string.dinar_placeholder, total
                     )
 
                     TransactionCurrency.Dollar -> context.getString(
-                        R.string.dollar_placeholder, transaction.total
+                        R.string.dollar_placeholder, total
                     )
                 }
                 tvMoney.text = money

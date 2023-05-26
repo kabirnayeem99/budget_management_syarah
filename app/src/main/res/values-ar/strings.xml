@@ -3,8 +3,8 @@
     <string name="label_accounts">الحسابات</string>
     <string name="action_add">إضافة</string>
     <string name="action_export">تصدير</string>
-    <string name="dollar_placeholder">%1$d $</string>
-    <string name="dinar_placeholder">%1$d د.أ</string>
+    <string name="dollar_placeholder">$ %1$s</string>
+    <string name="dinar_placeholder">%1$s د.أ</string>
     <string name="hint_edit_account">تعديل الحساب</string>
     <string name="hint_delete_account">حذف الحساب</string>
     <string name="hint_dollar_amount">أدخل قيمة الدولار</string>
@@ -14,4 +14,12 @@
     <string name="label_months">الشهور</string>
     <string name="hint_select_month">اختر شهرًا</string>
     <string name="label_transaction_details">تفاصيل الصفقه</string>
+    <string name="action_save">يحفظ</string>
+    <string name="label_transaction_create_or_update">إنشاء / تحديث المعاملة</string>
+    <string name="hint_add_transaction_name">أضف اسم المعاملة</string>
+    <string name="hint_add_amount">أضف المبلغ</string>
+    <string name="dollar">دولار</string>
+    <string name="dinar">دينار</string>
+    <string name="label_expense">مصروف</string>
+    <string name="label_income">دخل</string>
 </resources>

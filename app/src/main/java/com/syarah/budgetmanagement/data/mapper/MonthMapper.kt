@@ -15,9 +15,6 @@ fun List<MonthLocalDto>.toMonths(): List<Month> {
     }
 }
 
-fun List<Month>.toMonthDtoList(): List<MonthLocalDto> = map { entity -> entity.toMonthDto() }
-
-
 fun Month.toMonthDto(): MonthLocalDto {
     return MonthLocalDto(
         id = this.id,

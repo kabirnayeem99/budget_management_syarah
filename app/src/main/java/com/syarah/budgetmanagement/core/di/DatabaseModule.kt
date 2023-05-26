@@ -20,26 +20,18 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): BudgetManagementDatabase {
         return Room.databaseBuilder(
-            context,
-            BudgetManagementDatabase::class.java,
-            "budget_management_database"
+            context, BudgetManagementDatabase::class.java, "budget_management_database"
         ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
-    fun provideAccountDao(db: BudgetManagementDatabase): AccountDao {
-        return db.getAccountDao()
-    }
+    fun provideAccountDao(db: BudgetManagementDatabase): AccountDao = db.getAccountDao()
 
     @Provides
-    fun provideMonthDao(db: BudgetManagementDatabase): MonthDao {
-        return db.getMonthDao()
-    }
+    fun provideMonthDao(db: BudgetManagementDatabase): MonthDao = db.getMonthDao()
 
     @Provides
-    fun provideTransactionDao(db: BudgetManagementDatabase): TransactionDao {
-        return db.getTransactionDao()
-    }
+    fun provideTransactionDao(db: BudgetManagementDatabase): TransactionDao = db.getTransactionDao()
 
 
 }

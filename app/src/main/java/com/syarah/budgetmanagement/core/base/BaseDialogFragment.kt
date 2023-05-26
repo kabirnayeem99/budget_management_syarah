@@ -17,7 +17,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding> : BottomSheetDialogFragme
 
     protected val binding get() = _binding!!
 
-    protected lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     @get:LayoutRes
     protected abstract val layout: Int

@@ -2,6 +2,7 @@ package com.syarah.budgetmanagement.domain.usecase.month
 
 import com.syarah.budgetmanagement.domain.entity.Month
 import com.syarah.budgetmanagement.domain.repository.MonthRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class RemoveMonthUseCase @Inject constructor(
@@ -12,6 +13,7 @@ class RemoveMonthUseCase @Inject constructor(
             monthRepository.deleteMonth(month)
             Result.success(month.presentableDate)
         } catch (e: Exception) {
+            Timber.e(e)
             Result.failure(e)
         }
     }

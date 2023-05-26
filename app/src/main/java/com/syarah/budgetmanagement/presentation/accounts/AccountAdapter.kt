@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.syarah.budgetmanagement.R
+import com.syarah.budgetmanagement.core.utility.toArabic
 import com.syarah.budgetmanagement.databinding.ListItemAccountBinding
 import com.syarah.budgetmanagement.domain.entity.Account
+import java.util.Locale
 
 class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
 
@@ -33,11 +35,21 @@ class AccountAdapter : RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() 
         fun bind(account: Account) {
             val context = binding.root.context
             binding.apply {
+
+                val locale: Locale = context.resources.configuration.locales[0]
+                var dinarAmount = account.dinarAmount.toString()
+                var dollarAmount = account.dollarAmount.toString()
+
+                if (locale.language == "ar") {
+                    dinarAmount = dinarAmount.toArabic()
+                    dollarAmount = dollarAmount.toArabic()
+                }
+
                 tvAccountName.text = account.name
-                tvCurrencyDinar.text =
-                    context.getString(R.string.dinar_placeholder, account.dinarAmount)
+                tvCurrencyDinar.text = context.getString(R.string.dinar_placeholder, dinarAmount)
                 tvCurrencyDollar.text =
-                    context.getString(R.string.dollar_placeholder, account.dollarAmount)
+                    context.getString(R.string.dollar_placeholder, dollarAmount)
+
 
                 root.setOnClickListener { _onClick?.let { func -> func(account) } }
                 ivDeleteButton.setOnClickListener { _onDelete?.let { func -> func(account) } }

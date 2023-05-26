@@ -16,7 +16,6 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
     @get:LayoutRes
     protected abstract val layout: Int
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layout)

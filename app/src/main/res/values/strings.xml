@@ -3,8 +3,8 @@
     <string name="label_accounts">Accounts</string>
     <string name="action_add">Add</string>
     <string name="action_export">Export</string>
-    <string name="dollar_placeholder">$ %1$d</string>
-    <string name="dinar_placeholder">JD %1$d</string>
+    <string name="dollar_placeholder">$ %1$s</string>
+    <string name="dinar_placeholder">JD %1$s</string>
     <string name="hint_edit_account">edit account</string>
     <string name="hint_delete_account">delete account</string>
     <string name="hint_dollar_amount">Enter your dollars</string>

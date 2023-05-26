@@ -13,11 +13,8 @@ class DefaultMonthRepository @Inject constructor(
 
     override suspend fun updateMonth(month: Month) = monthLocalDataSource.updateMonth(month)
 
-    override suspend fun deleteMonth(month: Month)  = monthLocalDataSource.deleteMonth(month)
+    override suspend fun deleteMonth(month: Month) = monthLocalDataSource.deleteMonth(month)
 
-    override  fun getMonths(accountId: Int): Flow<List<Month>> = monthLocalDataSource.getMonths(accountId)
-
-    override suspend fun getMonth(id: Int): Month {
-        TODO("Not yet implemented")
-    }
+    override fun getMonths(accountId: Int): Flow<List<Month>> =
+        monthLocalDataSource.getMonths(accountId)
 }
