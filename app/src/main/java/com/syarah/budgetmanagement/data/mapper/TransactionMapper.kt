@@ -48,7 +48,7 @@ fun TransactionLocalDto.toTransactionDetails(): TransactionDetails {
         name = entity.name,
         monthId = entity.monthId,
         accountId = entity.accountId,
-        total = entity.total,
+        amount = entity.total,
         currency = entity.currency,
         type = entity.type,
     )
@@ -62,7 +62,7 @@ fun TransactionDetails.toTransactionDto(): TransactionLocalDto {
         name = entity.name,
         monthId = entity.monthId,
         accountId = entity.accountId,
-        total = entity.total,
+        total = entity.amount,
         currency = entity.currency,
         type = entity.type,
     )

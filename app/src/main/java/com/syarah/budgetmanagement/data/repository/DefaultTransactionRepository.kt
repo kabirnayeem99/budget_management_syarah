@@ -13,13 +13,18 @@ class DefaultTransactionRepository @Inject constructor(
     override suspend fun addTransaction(transaction: TransactionDetails) =
         transactionLocalDataSource.addTransaction(transaction)
 
-    override suspend fun updateTransaction(transaction: Transaction) =
+    override suspend fun updateTransaction(transaction: TransactionDetails) =
         transactionLocalDataSource.updateTransaction(transaction)
 
     override suspend fun deleteTransaction(transaction: Transaction) =
         transactionLocalDataSource.deleteTransaction(transaction)
 
-    override fun getTransactions(): Flow<List<Transaction>> =
+
+    override fun getTransactions(
+        accountId: Int,
+        monthId: Int,
+        yearId: Int
+    ): Flow<List<Transaction>> =
         transactionLocalDataSource.getTransactions()
 
     override suspend fun getTransactionDetails(id: Int): TransactionDetails =

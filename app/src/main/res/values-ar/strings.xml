@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">إدارة الميزانية</string>
+    <string name="label_accounts">الحسابات</string>
+    <string name="action_add">إضافة</string>
+    <string name="action_export">تصدير</string>
+    <string name="dollar_placeholder">%1$d $</string>
+    <string name="dinar_placeholder">%1$d د.أ</string>
+    <string name="hint_edit_account">تعديل الحساب</string>
+    <string name="hint_delete_account">حذف الحساب</string>
+    <string name="hint_dollar_amount">أدخل قيمة الدولار</string>
+    <string name="hint_dinar_amount">أدخل قيمة الدينار</string>
+    <string name="hint_account_name">أدخل اسم الحساب</string>
+    <string name="add_account">إضافة حساب</string>
+    <string name="label_months">الشهور</string>
+    <string name="hint_select_month">اختر شهرًا</string>
+    <string name="label_transaction_details">تفاصيل الصفقه</string>
+</resources>

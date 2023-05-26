@@ -46,10 +46,17 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = monthAdapter
             }
-            monthAdapter.setOnClick { }
+            monthAdapter.setOnClick { month -> navigateToTransactionDetailsScreen(month) }
             monthAdapter.setOnEdit { month -> showMonthSelectionDialog(month) }
             monthAdapter.setOnDelete { month -> viewModel.deleteMonth(month) }
         }
+    }
+
+    private fun navigateToTransactionDetailsScreen(month: Month) {
+        val direction = MonthsFragmentDirections.actionMonthsFragmentToTransactionDetailsFragment(
+            monthId = month.monthId, year = month.year, accountId = args.accountId
+        )
+        navController.navigate(direction)
     }
 
     private fun setupMenu() {

@@ -14,7 +14,7 @@ class TransactionLocalDataSource @Inject constructor(private val transactionDao:
     suspend fun addTransaction(transaction: TransactionDetails) =
         transactionDao.addTransaction(transaction.toTransactionDto())
 
-    suspend fun updateTransaction(transaction: Transaction) =
+    suspend fun updateTransaction(transaction: TransactionDetails) =
         transactionDao.updateTransaction(transaction.toTransactionDto())
 
     suspend fun deleteTransaction(transaction: Transaction) =

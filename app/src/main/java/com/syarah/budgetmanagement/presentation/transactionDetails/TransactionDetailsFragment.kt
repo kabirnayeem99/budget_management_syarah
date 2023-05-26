@@ -17,9 +17,7 @@ import com.syarah.budgetmanagement.R
 import com.syarah.budgetmanagement.core.base.BaseFragment
 import com.syarah.budgetmanagement.databinding.FragmentTransactionDetailsBinding
 import com.syarah.budgetmanagement.domain.entity.Transaction
-import com.syarah.budgetmanagement.presentation.months.MonthsFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,7 +31,6 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
-        setupMenu()
         setUpData()
     }
 
@@ -45,7 +42,7 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
         viewModel.fetchTransactions(accountId, monthId, yearId)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {state->
+                viewModel.uiState.collect { state ->
                     transactionAdapter.submitList(state.transactions)
                 }
             }
@@ -53,7 +50,7 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
     }
 
     private fun setUpViews() {
-        activity?.title = context?.getString(R.string.label_accounts)
+        activity?.title = context?.getString(R.string.label_transaction_details)
         setupMenu()
         binding.apply {
             rvTransactions.apply {
@@ -70,7 +67,7 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
             override fun onPrepareMenu(menu: Menu) = Unit
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_accounts, menu)
+                menuInflater.inflate(R.menu.menu_months, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

@@ -4,7 +4,7 @@
     <string name="action_add">Add</string>
     <string name="action_export">Export</string>
     <string name="dollar_placeholder">$ %1$d</string>
-    <string name="dinar_placeholder">$ %1$d</string>
+    <string name="dinar_placeholder">JD %1$d</string>
     <string name="hint_edit_account">edit account</string>
     <string name="hint_delete_account">delete account</string>
     <string name="hint_dollar_amount">Enter your dollars</string>
@@ -13,4 +13,5 @@
     <string name="add_account">Add Account</string>
     <string name="label_months">Months</string>
     <string name="hint_select_month">Select month</string>
+    <string name="label_transaction_details">Transaction Details</string>
 </resources>
