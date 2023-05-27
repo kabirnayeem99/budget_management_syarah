@@ -22,4 +22,5 @@
     <string name="dinar">Dinar</string>
     <string name="label_expense">Expense</string>
     <string name="label_income">Income</string>
+    <string name="action_import">Import</string>
 </resources>

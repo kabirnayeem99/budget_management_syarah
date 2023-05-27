@@ -39,7 +39,6 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
         setData()
     }
 
-
     private fun setData() {
         lifecycleScope.launch {
             viewModel.fetchAccounts()
@@ -52,12 +51,14 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
     }
 
     private fun setUpViews() {
-        activity?.title = context?.getString(R.string.label_accounts)
         setupMenu()
         binding.apply {
             rvAccounts.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = accountAdapter
+            }
+            fabAddAccount.setOnClickListener {
+                showAdEditAccountDialog(null)
             }
         }
         accountAdapter.setOnClick { account -> navigateToMonthScreen(account) }
@@ -72,21 +73,12 @@ class AccountsFragment : BaseFragment<FragmentAccountsBinding>() {
     }
 
     private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) = Unit
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_accounts, menu)
+        binding.babAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_export -> exportAndBackUpAccounts()
             }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.menu_add -> showAdEditAccountDialog(null)
-                    R.id.menu_export -> exportAndBackUpAccounts()
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+            false
+        }
     }
 
 
