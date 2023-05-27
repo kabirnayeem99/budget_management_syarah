@@ -18,7 +18,6 @@ import com.syarah.budgetmanagement.databinding.FragmentTransactionUpsertBinding
 import com.syarah.budgetmanagement.domain.entity.TransactionCurrency
 import com.syarah.budgetmanagement.domain.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -43,25 +42,18 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
         }
     }
 
-    private val args by navArgs<TransactionUpsertFragmentArgs>()
-
     private fun setUpData() {
         lifecycleScope.launch {
             viewModel.fetchTransactionDetails(args.transactionId)
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    if (it.transactionDetails != null) {
-                        binding.apply {
-                            etName.setText(it.transactionDetails.name)
-                            etAmount.setText(it.transactionDetails.amount.toString())
-                            tbCurrency.check(if (it.transactionDetails.currency == TransactionCurrency.Dinar) R.id.btn_dinar else R.id.btn_dollar)
-                            tbType.check(if ((it.transactionDetails.type == TransactionType.Income)) R.id.btn_income else R.id.btn_expense)
-                        }
-                    }
-                }
+                viewModel.uiState.collect { uiState -> handleUiState(uiState) }
             }
         }
     }
+
+
+    private val args by navArgs<TransactionUpsertFragmentArgs>()
+
 
     private fun setupMenu() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
@@ -96,6 +88,18 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
                 monthId = args.monthId,
                 accountId = args.accountId,
                 onSaved = { navController.navigateUp() })
+        }
+    }
+
+
+    private fun handleUiState(uiState: TransactionUpsertUiState) {
+        uiState.transactionDetails?.let { transactionDetails ->
+            binding.apply {
+                etName.setText(transactionDetails.name)
+                etAmount.setText(transactionDetails.amount.toString())
+                tbCurrency.check(if (transactionDetails.currency == TransactionCurrency.Dinar) R.id.btn_dinar else R.id.btn_dollar)
+                tbType.check(if ((transactionDetails.type == TransactionType.Income)) R.id.btn_income else R.id.btn_expense)
+            }
         }
     }
 }

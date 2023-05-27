@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_accounts">
         <action
             android:id="@+id/action_accountsFragment_to_monthsFragment"
-            app:destination="@id/monthsFragment" />
+            app:destination="@id/monthsFragment"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
     </fragment>
 
     <fragment
@@ -22,7 +26,10 @@
         tools:layout="@layout/fragment_months">
         <action
             android:id="@+id/action_monthsFragment_to_transactionDetailsFragment"
-            app:destination="@id/transactionDetailsFragment" />
+            app:destination="@id/transactionDetailsFragment" app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
         <argument
             android:name="account_id"
             android:defaultValue="-1"
@@ -36,41 +43,44 @@
         tools:layout="@layout/fragment_transaction_details">
         <action
             android:id="@+id/action_transactionDetailsFragment_to_transactionUpsertFragment"
-            app:destination="@id/transactionUpsertFragment" />
+            app:destination="@id/transactionUpsertFragment" app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
         <argument
             android:name="month_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="year"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="account_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 
     <fragment
         android:id="@+id/transactionUpsertFragment"
         android:name="com.syarah.budgetmanagement.presentation.transactionUpsert.TransactionUpsertFragment"
         android:label="TransactionUpsertFragment"
-        tools:layout="@layout/fragment_transaction_upsert" >
+        tools:layout="@layout/fragment_transaction_upsert">
         <argument
             android:name="transaction_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="month_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="year"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="account_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
 </navigation>

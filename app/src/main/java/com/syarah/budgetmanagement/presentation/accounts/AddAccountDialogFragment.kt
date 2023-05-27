@@ -31,8 +31,9 @@ class AddAccountDialogFragment : BaseDialogFragment<FragmentDialogAddAccountBind
         binding.apply {
             btnSave.setOnClickListener {
                 val accountName = etName.text.toString()
-                viewModel.createOrUpdateAccount(accountName)
-                dismiss()
+                viewModel.createOrUpdateAccount(accountName, onError = { errorMessage ->
+                    tilName.error = errorMessage
+                }, onFinished = { dismiss() })
             }
         }
     }
@@ -42,7 +43,6 @@ class AddAccountDialogFragment : BaseDialogFragment<FragmentDialogAddAccountBind
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     val editableAccount = uiState.editableAccount
-                    Timber.d(editableAccount.toString())
                     editableAccount?.let { account -> binding.etName.setText(account.name) }
                 }
             }

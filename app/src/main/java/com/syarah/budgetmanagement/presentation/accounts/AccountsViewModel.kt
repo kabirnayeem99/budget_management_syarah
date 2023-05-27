@@ -31,9 +31,20 @@ class AccountsViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
 
-    fun createOrUpdateAccount(name: String) {
-        val isUpdate = uiState.value.editableAccount != null
-        if (isUpdate) updateAccount(name) else createNewAccount(name)
+    fun createOrUpdateAccount(name: String, onError: (String) -> Unit, onFinished: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (name.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    onError("Account name can't be empty")
+                }
+                return@launch
+            }
+            val isUpdate = uiState.value.editableAccount != null
+            if (isUpdate) updateAccount(name) else createNewAccount(name)
+            withContext(Dispatchers.Main) {
+                onFinished()
+            }
+        }
     }
 
     private fun createNewAccount(name: String) {
@@ -65,7 +76,7 @@ class AccountsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             getAccountsUseCase().collect { results ->
                 results.onFailure { e ->
-                    _uiState.update { it.copy(errorMessage = e.message) }
+                    _uiState.update { it.copy(errorMessage = e.localizedMessage) }
                 }.onSuccess { accounts ->
                     Timber.d(accounts.toString())
                     _uiState.update { it.copy(accounts = accounts) }

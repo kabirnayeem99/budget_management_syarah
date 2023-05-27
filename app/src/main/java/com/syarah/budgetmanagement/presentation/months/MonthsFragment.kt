@@ -53,6 +53,16 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
         }
     }
 
+    private fun setUpData() {
+        lifecycleScope.launch {
+            val accountId = args.accountId
+            viewModel.fetchMonths(accountId)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState -> monthAdapter.submitList(uiState.months) }
+            }
+        }
+    }
+
     private fun navigateToTransactionDetailsScreen(month: Month) {
         val direction = MonthsFragmentDirections.actionMonthsFragmentToTransactionDetailsFragment(
             monthId = month.id, accountId = args.accountId
@@ -64,9 +74,8 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) = Unit
 
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
                 menuInflater.inflate(R.menu.menu_months, menu)
-            }
 
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -109,15 +118,4 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
 
     private val args: MonthsFragmentArgs by navArgs()
 
-    private fun setUpData() {
-        lifecycleScope.launch {
-            val accountId = args.accountId
-            viewModel.fetchMonths(accountId)
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
-                    monthAdapter.submitList(uiState.months)
-                }
-            }
-        }
-    }
 }
