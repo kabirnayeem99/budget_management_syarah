@@ -40,8 +40,7 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
     }
 
     private fun setUpView() {
-        activity?.title = context?.getString(R.string.label_months)
-        setupMenu()
+
         binding.apply {
             rvMonths.apply {
                 layoutManager = LinearLayoutManager(requireContext())
@@ -50,6 +49,8 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
             monthAdapter.setOnClick { month -> navigateToTransactionDetailsScreen(month) }
             monthAdapter.setOnEdit { month -> showMonthSelectionDialog(month) }
             monthAdapter.setOnDelete { month -> viewModel.deleteMonth(month) }
+
+            fabAddMonth.setOnClickListener { showMonthSelectionDialog(null) }
         }
     }
 
@@ -70,24 +71,6 @@ class MonthsFragment : BaseFragment<FragmentMonthsBinding>() {
         navController.navigate(direction)
     }
 
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) = Unit
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) =
-                menuInflater.inflate(R.menu.menu_months, menu)
-
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.menu_add -> showMonthSelectionDialog(null)
-                }
-                return true
-            }
-
-
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
     private fun showMonthSelectionDialog(month: Month?) {
 
