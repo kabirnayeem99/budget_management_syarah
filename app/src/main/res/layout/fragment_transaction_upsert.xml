@@ -14,85 +14,136 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/ic_transaction"
+            app:tint="?colorOnBackground" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/label_transaction_create_or_update"
+            android:textAlignment="center"
+            android:textSize="25sp" />
+
         <TextView
             android:id="@+id/tv_date"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="8dp"
             android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_month"
             tools:text="24/12/2024" />
 
-        <EditText
-            android:id="@+id/et_name"
-            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:autofillHints="name"
-            android:hint="@string/hint_add_transaction_name"
-            android:inputType="textAutoCorrect" />
+            android:layout_margin="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/hint_add_transaction_name"
+                android:inputType="textAutoCorrect" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/et_amount"
-            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:autofillHints="money"
-            android:hint="@string/hint_add_amount"
-            android:inputType="number" />
+            android:layout_margin="12dp">
+
+            <EditText
+                android:id="@+id/et_amount"
+                style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="money"
+                android:hint="@string/hint_add_amount"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/tb_currency"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="12dp"
             app:singleSelection="true">
 
             <Button
-                style="?attr/materialButtonOutlinedStyle"
                 android:id="@+id/btn_dinar"
-                android:layout_width="wrap_content"
-                android:checked="true"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:checked="true"
                 android:text="@string/dinar" />
 
             <Button
                 android:id="@+id/btn_dollar"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="50"
                 android:text="@string/dollar" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/tb_type"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="12dp"
             app:singleSelection="true">
 
             <Button
-                style="?attr/materialButtonOutlinedStyle"
                 android:id="@+id/btn_income"
-                android:layout_width="wrap_content"
-                android:checked="true"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:checked="true"
                 android:text="@string/label_income" />
 
             <Button
                 android:id="@+id/btn_expense"
                 style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="50"
                 android:text="@string/label_expense" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/ThemeOverlay.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="12dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_save"
+            android:text="@string/action_save"
+            app:icon="@drawable/ic_save" />
     </LinearLayout>
 </layout>

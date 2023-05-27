@@ -35,10 +35,9 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
     }
 
     private fun setUpViews() {
-        activity?.title = context?.getString(R.string.label_transaction_create_or_update)
-        setupMenu()
         binding.apply {
             tvDate.text = Date().toString()
+            btnSave.setOnClickListener { saveTransaction() }
         }
     }
 
@@ -53,24 +52,6 @@ class TransactionUpsertFragment : BaseFragment<FragmentTransactionUpsertBinding>
 
 
     private val args by navArgs<TransactionUpsertFragmentArgs>()
-
-
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) = Unit
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_transaction_upsert, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.menu_save -> saveTransaction()
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
     private fun saveTransaction() {
         lifecycleScope.launch {

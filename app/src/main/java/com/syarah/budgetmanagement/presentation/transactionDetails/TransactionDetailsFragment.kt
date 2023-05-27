@@ -49,34 +49,20 @@ class TransactionDetailsFragment : BaseFragment<FragmentTransactionDetailsBindin
     }
 
     private fun setUpViews() {
-        activity?.title = context?.getString(R.string.label_transaction_details)
-        setupMenu()
+
         binding.apply {
             rvTransactions.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = transactionAdapter
             }
+            fabAddTransaction.setOnClickListener { navigateToTransactionUpsertScreen(null) }
         }
         transactionAdapter.setOnClick { transaction -> navigateToTransactionUpsertScreen(transaction) }
         transactionAdapter.setOnDelete { transaction -> viewModel.deleteTransaction(transaction) }
+
     }
 
-    private fun setupMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onPrepareMenu(menu: Menu) = Unit
 
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_months, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.menu_add -> navigateToTransactionUpsertScreen(null)
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
     private fun navigateToTransactionUpsertScreen(transaction: Transaction?) {
         navController.navigate(

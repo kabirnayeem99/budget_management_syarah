@@ -28,8 +28,6 @@
                 android:drawablePadding="8dp"
                 android:textAlignment="textStart"
                 android:textColor="?colorOnBackground"
-                app:drawableEndCompat="@drawable/ic_transaction"
-                app:drawableTint="?colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
